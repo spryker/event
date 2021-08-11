@@ -85,7 +85,7 @@ class EventDispatcher implements EventDispatcherInterface
         $messageEventTransfer = $eventTransfer->getMessage();
         $eventListeners = $this->extractEventListeners($eventName);
 
-        if (empty($eventListeners)) {
+        if (empty($eventListeners) || !$messageEventTransfer) {
             return;
         }
 
