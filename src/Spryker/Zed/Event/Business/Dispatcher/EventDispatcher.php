@@ -81,7 +81,7 @@ class EventDispatcher implements EventDispatcherInterface
     protected function dispatchEvent(EventTransfer $eventTransfer): void
     {
         $eventName = $eventTransfer->getEventName();
-        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $messageEventTransfer */
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface|null $messageEventTransfer */
         $messageEventTransfer = $eventTransfer->getMessage();
         $eventListeners = $this->extractEventListeners($eventName);
 

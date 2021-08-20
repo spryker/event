@@ -23,7 +23,6 @@
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Zed\\Event\\": "tests/SprykerTest/Zed/Event/",
             "SprykerTest\\Zed\\Event\\Helper\\": "tests/SprykerTest/Zed/Event/_support/Helper/"
         }
     },

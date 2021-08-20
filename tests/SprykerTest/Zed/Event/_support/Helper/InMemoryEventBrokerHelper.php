@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Copyright © 2021-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\Event\Helper;
 
-use PHPUnit\Framework\Assert;
 use Codeception\TestInterface;
+use PHPUnit\Framework\Assert;
 use Spryker\Zed\Event\EventDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\AbstractHelper;
 use SprykerTest\Zed\Event\Stub\InMemoryEventBrokerPlugin;
@@ -18,12 +19,12 @@ class InMemoryEventBrokerHelper extends AbstractHelper
     use DependencyProviderHelperTrait;
 
     /**
-     * @var InMemoryEventBrokerPlugin
+     * @var \SprykerTest\Zed\Event\Stub\InMemoryEventBrokerPlugin
      */
     protected $inMemoryEventBrokerPlugin;
 
     /**
-     * @param TestInterface $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */

@@ -1,14 +1,13 @@
 <?php
 
 /**
- * Copyright © 2021-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\Event\Stub;
 
 use Generated\Shared\Transfer\EventCollectionTransfer;
-use Generated\Shared\Transfer\EventTransfer;
 use Spryker\Shared\EventExtension\Dependency\Plugin\EventBrokerPluginInterface;
 
 class InMemoryEventBrokerPlugin implements EventBrokerPluginInterface
@@ -19,6 +18,8 @@ class InMemoryEventBrokerPlugin implements EventBrokerPluginInterface
     protected $events = [];
 
     /**
+     * @param \Generated\Shared\Transfer\EventCollectionTransfer $eventCollectionTransfer
+     *
      * @return void
      */
     public function putEvents(EventCollectionTransfer $eventCollectionTransfer): void
@@ -46,18 +47,18 @@ class InMemoryEventBrokerPlugin implements EventBrokerPluginInterface
      * @param string $eventBus
      * @param string $eventName
      *
-     * @return EventTransfer[]
+     * @return \Generated\Shared\Transfer\EventTransfer[]
      */
     public function getEventsForEventBusByEventName(string $eventBus, string $eventName): array
     {
         $events = [];
-        
+
         if (!isset($this->events[$eventBus])) {
             return $events;
         }
 
         foreach ($this->events[$eventBus] as $eventTransfer) {
-            if($eventTransfer->getEventName() === $eventName) {
+            if ($eventTransfer->getEventName() === $eventName) {
                 $events[] = $eventTransfer;
             }
         }
