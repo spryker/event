@@ -36,6 +36,14 @@ class InMemoryEventBrokerHelper extends AbstractHelper
     }
 
     /**
+     * @return void
+     */
+    public function clearEvents(): void
+    {
+        $this->inMemoryEventBrokerPlugin->clearEvents();
+    }
+
+    /**
      * @param string $eventBus
      * @param string $eventName
      *
@@ -46,5 +54,19 @@ class InMemoryEventBrokerHelper extends AbstractHelper
         $events = $this->inMemoryEventBrokerPlugin->getEventsForEventBusByEventName($eventBus, $eventName);
 
         Assert::assertGreaterThan(0, count($events));
+    }
+
+    /**
+     * @param callable $callback
+     * @param string $eventBus
+     * @param string $eventName
+     *
+     * @return void
+     */
+    public function assertEventsByCallbackForEventBusAndEventName(callable $callback, string $eventBus, string $eventName): void
+    {
+        $events = $this->inMemoryEventBrokerPlugin->getEventsForEventBusByEventName($eventBus, $eventName);
+
+        $callback($events);
     }
 }

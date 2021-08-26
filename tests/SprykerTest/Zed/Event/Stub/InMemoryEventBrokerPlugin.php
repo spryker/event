@@ -44,6 +44,14 @@ class InMemoryEventBrokerPlugin implements EventBrokerPluginInterface
     }
 
     /**
+     * @return void
+     */
+    public function clearEvents(): void
+    {
+        $this->events = [];
+    }
+
+    /**
      * @param string $eventBus
      * @param string $eventName
      *
