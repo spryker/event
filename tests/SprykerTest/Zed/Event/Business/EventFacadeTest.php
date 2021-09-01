@@ -115,7 +115,7 @@ class EventFacadeTest extends Unit
         $eventDispatcherMock->expects($this->once())
             ->method('dispatch');
 
-        $eventRouter = new EventRouter($eventDispatcherMock, [$eventBrokerPluginMock]);
+        $eventRouter = new EventRouter($eventDispatcherMock, $this->tester->getModuleConfig(), [$eventBrokerPluginMock]);
 
         $eventBusinessFactory = $this->createEventBusinessFactoryMock($eventRouter);
 
@@ -148,7 +148,7 @@ class EventFacadeTest extends Unit
         $eventDispatcherMock->expects($this->any())
             ->method('dispatch');
 
-        $eventRouter = new EventRouter($eventDispatcherMock, [$eventBrokerPluginMock]);
+        $eventRouter = new EventRouter($eventDispatcherMock, $this->tester->getModuleConfig(), [$eventBrokerPluginMock]);
 
         $eventBusinessFactory = $this->createEventBusinessFactoryMock($eventRouter);
 
@@ -177,7 +177,7 @@ class EventFacadeTest extends Unit
         $eventDispatcherMock->expects($this->once())
             ->method('dispatch');
 
-        $eventRouter = new EventRouter($eventDispatcherMock, [$eventBrokerPluginMock]);
+        $eventRouter = new EventRouter($eventDispatcherMock, $this->tester->getModuleConfig(), [$eventBrokerPluginMock]);
 
         $eventBusinessFactory = $this->createEventBusinessFactoryMock($eventRouter);
 
@@ -227,7 +227,7 @@ class EventFacadeTest extends Unit
         $eventDispatcherMock->expects($this->exactly(1))
             ->method('dispatch');
 
-        $eventRouter = new EventRouter($eventDispatcherMock, $eventBrokerPluginMocks);
+        $eventRouter = new EventRouter($eventDispatcherMock, $this->tester->getModuleConfig(), $eventBrokerPluginMocks);
 
         $eventBusinessFactory = $this->createEventBusinessFactoryMock($eventRouter);
 
