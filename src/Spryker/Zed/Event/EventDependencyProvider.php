@@ -19,12 +19,24 @@ use Spryker\Zed\Kernel\Container;
  */
 class EventDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const EVENT_LISTENERS = 'event_listeners';
+    /**
+     * @var string
+     */
     public const EVENT_SUBSCRIBERS = 'event subscribers';
     public const EVENT_BROKER_PLUGINS = 'EVENT_BROKER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'client queue';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'service util encoding';
 
     /**
