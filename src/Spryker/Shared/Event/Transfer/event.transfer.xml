@@ -18,6 +18,7 @@
         <property name="reject" type="bool"/>
         <property name="hasError" type="bool"/>
         <property name="queueName" type="string"/>
+        <property name="isRetryExist" type="bool"/>
     </transfer>
 
     <transfer name="QueueSendMessage">

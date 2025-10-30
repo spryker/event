@@ -232,7 +232,9 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function handleFailedMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage): void
     {
-        $this->retryMessage($queueMessageTransfer, $errorMessage);
+        if ($queueMessageTransfer->getIsRetryExist() !== false) {
+            $this->retryMessage($queueMessageTransfer, $errorMessage);
+        }
         $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
     }
 
