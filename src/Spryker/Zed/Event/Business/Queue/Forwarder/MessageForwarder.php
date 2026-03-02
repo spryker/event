@@ -23,9 +23,6 @@ class MessageForwarder implements MessageForwarderInterface
      */
     protected $queryContainer;
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface $queueClient
-     */
     public function __construct(EventToQueueInterface $queueClient)
     {
         $this->queueClient = $queueClient;
@@ -50,11 +47,6 @@ class MessageForwarder implements MessageForwarderInterface
         return $responses;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     *
-     * @return void
-     */
     protected function sendMessage(QueueReceiveMessageTransfer $queueMessageTransfer): void
     {
         $queueSendMessageTransfer = new QueueSendMessageTransfer();

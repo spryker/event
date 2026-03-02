@@ -14,10 +14,6 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 
 class EventListenerDumper implements EventListenerDumperInterface
 {
-    /**
-     * @param \Spryker\Zed\Event\Business\Subscriber\SubscriberMergerInterface $subscriberMerger
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     */
     public function __construct(protected SubscriberMergerInterface $subscriberMerger, protected EventCollectionInterface $eventCollection)
     {
     }
@@ -60,11 +56,6 @@ class EventListenerDumper implements EventListenerDumperInterface
         return $dumpedListeners;
     }
 
-    /**
-     * @param string $listenerClassName
-     *
-     * @return string
-     */
     protected function getListenerIdentifier(string $listenerClassName): string
     {
         $listenerClassNameFragments = explode('\\', $listenerClassName);

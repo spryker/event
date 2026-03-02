@@ -42,12 +42,6 @@ class EventDispatcher implements EventDispatcherInterface
      */
     protected $utilEncodingService;
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     * @param \Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface $eventQueueProducer
-     * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
-     * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
-     */
     public function __construct(
         EventCollectionInterface $eventCollection,
         EventQueueProducerInterface $eventQueueProducer,
@@ -60,12 +54,6 @@ class EventDispatcher implements EventDispatcherInterface
         $this->utilEncodingService = $utilEncodingService;
     }
 
-    /**
-     * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
-     *
-     * @return void
-     */
     public function trigger(string $eventName, TransferInterface $transfer): void
     {
         $eventListeners = $this->extractEventListeners($eventName);
@@ -251,12 +239,6 @@ class EventDispatcher implements EventDispatcherInterface
         return $foundEventListeners;
     }
 
-    /**
-     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
-     * @param string $desiredListenerName
-     *
-     * @return string
-     */
     protected function extractListenerNameFromFullyQualifiedName(EventListenerContextInterface $eventListener, string $desiredListenerName): string
     {
         $compareSymbolsFromEnd = -(strlen($desiredListenerName));
@@ -264,11 +246,6 @@ class EventDispatcher implements EventDispatcherInterface
         return substr($eventListener->getListenerName(), $compareSymbolsFromEnd);
     }
 
-    /**
-     * @param string $listenerName
-     *
-     * @return bool
-     */
     protected function isFullyQualifiedName(string $listenerName): bool
     {
         return strpos($listenerName, '\\') === 0;
@@ -343,11 +320,6 @@ class EventDispatcher implements EventDispatcherInterface
         );
     }
 
-    /**
-     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
-     *
-     * @return string
-     */
     protected function createHandleMessage(EventListenerContextInterface $eventListener): string
     {
         if ($eventListener->isHandledInQueue()) {

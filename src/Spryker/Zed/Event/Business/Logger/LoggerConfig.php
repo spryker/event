@@ -20,9 +20,6 @@ class LoggerConfig implements LoggerConfigInterface
      */
     protected $eventConfig;
 
-    /**
-     * @param \Spryker\Zed\Event\EventConfig $eventConfig
-     */
     public function __construct(EventConfig $eventConfig)
     {
         $this->eventConfig = $eventConfig;

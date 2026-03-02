@@ -43,9 +43,6 @@ class EventDispatcherTest extends Unit
      */
     public const LISTENER_NAME = 'Test/Listener';
 
-    /**
-     * @return void
-     */
     public function testTriggerWhenSynchronousEventTriggeredShouldInvokeHandle(): void
     {
         $eventCollection = $this->createEventCollection();
@@ -65,9 +62,6 @@ class EventDispatcherTest extends Unit
         $eventDispatcher->trigger(static::TEST_EVENT_NAME, $transferMock);
     }
 
-    /**
-     * @return void
-     */
     public function testTriggerWhenAsynchronousEventTriggeredShouldWriteToQueue(): void
     {
         $transferMocks = [];
@@ -92,9 +86,6 @@ class EventDispatcherTest extends Unit
         $eventDispatcher->triggerBulk(static::TEST_EVENT_NAME, $transferMocks);
     }
 
-    /**
-     * @return void
-     */
     public function testTriggerBulkWhenAsynchronousEventTriggeredShouldWriteToQueue(): void
     {
         $eventCollection = $this->createEventCollection();
@@ -116,9 +107,6 @@ class EventDispatcherTest extends Unit
         $eventDispatcher->trigger(static::TEST_EVENT_NAME, $transferMock);
     }
 
-    /**
-     * @return void
-     */
     public function testTriggerWhenEventHandledShouldLogIt(): void
     {
         $eventCollection = $this->createEventCollection();
@@ -141,13 +129,6 @@ class EventDispatcherTest extends Unit
         $eventDispatcher->trigger(static::TEST_EVENT_NAME, $transferMock);
     }
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     * @param \Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface|null $queueProducerMock
-     * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface|null $eventLoggerMock
-     *
-     * @return \Spryker\Zed\Event\Business\Dispatcher\EventDispatcherInterface
-     */
     protected function createEventDispatcher(
         EventCollectionInterface $eventCollection,
         ?EventQueueProducerInterface $queueProducerMock = null,
@@ -166,9 +147,6 @@ class EventDispatcherTest extends Unit
         return new EventDispatcher($eventCollection, $queueProducerMock, $eventLoggerMock, $utilEncodingMock);
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
-     */
     protected function createEventCollection(): EventCollectionInterface
     {
         return new EventCollection();

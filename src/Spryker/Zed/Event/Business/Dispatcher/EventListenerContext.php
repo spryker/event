@@ -64,9 +64,6 @@ class EventListenerContext implements EventListenerContextInterface
         return $this->queuePoolName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEventQueueName(): ?string
     {
         return $this->eventQueueName;

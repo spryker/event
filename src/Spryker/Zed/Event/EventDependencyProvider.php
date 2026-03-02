@@ -43,11 +43,6 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const SERVICE_UTIL_ENCODING = 'service util encoding';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addEventListenerCollection($container);
@@ -58,27 +53,16 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
-     */
     public function getEventListenerCollection(): EventCollectionInterface
     {
         return new EventCollection();
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
-     */
     public function getEventSubscriberCollection(): EventSubscriberCollectionInterface
     {
         return new EventSubscriberCollection();
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addEventListenerCollection(Container $container): Container
     {
         $container->set(static::EVENT_LISTENERS, function (Container $container) {
@@ -88,11 +72,6 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addEventSubscriberCollection(Container $container): Container
     {
         $container->set(static::EVENT_SUBSCRIBERS, function (Container $container) {
@@ -102,11 +81,6 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addQueueClient(Container $container): Container
     {
         $container->set(static::CLIENT_QUEUE, function (Container $container) {
@@ -116,11 +90,6 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {

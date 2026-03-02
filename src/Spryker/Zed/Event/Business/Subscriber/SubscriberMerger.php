@@ -22,9 +22,6 @@ class SubscriberMerger implements SubscriberMergerInterface
      */
     protected static $eventCollectionBuffer;
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface $eventSubscriberCollection
-     */
     public function __construct(EventSubscriberCollectionInterface $eventSubscriberCollection)
     {
         $this->eventSubscriberCollection = $eventSubscriberCollection;

@@ -57,11 +57,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected $maxRetry;
 
-    /**
-     * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
-     * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Event\EventConfig $eventConfig
-     */
     public function __construct(
         EventLoggerInterface $eventLogger,
         EventToUtilEncodingInterface $utilEncodingService,
@@ -161,14 +156,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         }
     }
 
-    /**
-     * @param array $eventItem
-     * @param string $eventName
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface $listener
-     * @param string $listenerClassName
-     *
-     * @return void
-     */
     protected function handleBulkItemsIndividually(array $eventItem, string $eventName, EventBulkHandlerInterface $listener, string $listenerClassName): void
     {
         foreach ($eventItem[static::EVENT_TRANSFERS] as $key => $eventItemTransfer) {
@@ -180,14 +167,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $eventName
-     * @param string $listenerClassName
-     * @param \Throwable $throwable
-     *
-     * @return void
-     */
     protected function handleFailedEventItem(
         QueueReceiveMessageTransfer $queueMessageTransfer,
         string $eventName,
@@ -204,13 +183,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $this->handleFailedMessage($queueMessageTransfer, $errorMessage);
     }
 
-    /**
-     * @param string $eventName
-     * @param string $listenerClassName
-     * @param \Throwable $exception
-     *
-     * @return string
-     */
     protected function createErrorMessage(string $eventName, string $listenerClassName, Throwable $exception): string
     {
         $errorMessage = sprintf(
@@ -224,12 +196,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         return $errorMessage;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
     protected function handleFailedMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage): void
     {
         if ($queueMessageTransfer->getIsRetryExist() !== false) {
@@ -238,12 +204,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $retryMessage
-     *
-     * @return void
-     */
     protected function retryMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $retryMessage): void
     {
         if ($queueMessageTransfer->getRoutingKey()) {
@@ -264,11 +224,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         }
     }
 
-    /**
-     * @param array $messageBody
-     *
-     * @return array
-     */
     protected function updateMessageRetryKey(array $messageBody): array
     {
         if (!isset($messageBody[static::RETRY_KEY])) {

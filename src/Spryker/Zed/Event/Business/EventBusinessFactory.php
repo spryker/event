@@ -38,9 +38,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class EventBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\Event\Business\Dispatcher\EventDispatcherInterface
-     */
     public function createEventDispatcher(): EventDispatcherInterface
     {
         $eventListeners = $this->createSubscriberMerger()
@@ -54,9 +51,6 @@ class EventBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface
-     */
     public function createEventQueueProducer(): EventQueueProducerInterface
     {
         return new EventQueueProducer(
@@ -66,89 +60,56 @@ class EventBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\Queue\Consumer\EventQueueConsumerInterface
-     */
     public function createEventQueueConsumer(): EventQueueConsumerInterface
     {
         return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService(), $this->getConfig());
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\Queue\Forwarder\MessageForwarderInterface
-     */
     public function createMessageForwarder(): MessageForwarderInterface
     {
         return new MessageForwarder($this->getQueueClient());
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\Subscriber\SubscriberMergerInterface
-     */
     public function createSubscriberMerger(): SubscriberMergerInterface
     {
         return new SubscriberMerger($this->getEventSubscriberCollection());
     }
 
-    /**
-     * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
-     */
     public function createLoggerConfig(): LoggerConfigInterface
     {
         return new LoggerConfig($this->getConfig());
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
-     */
     public function getEventListeners(): EventCollectionInterface
     {
         return $this->getProvidedDependency(EventDependencyProvider::EVENT_LISTENERS);
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
-     */
     public function getEventSubscriberCollection(): EventSubscriberCollectionInterface
     {
         return $this->getProvidedDependency(EventDependencyProvider::EVENT_SUBSCRIBERS);
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
-     */
     public function getUtilEncodingService(): EventToUtilEncodingInterface
     {
         return $this->getProvidedDependency(EventDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface
-     */
     public function getQueueClient(): EventToQueueInterface
     {
         return $this->getProvidedDependency(EventDependencyProvider::CLIENT_QUEUE);
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
-     */
     public function createEventLogger(): EventLoggerInterface
     {
         return new EventLogger($this->createLoggerConfig(), $this->getConfig());
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Business\Dumper\EventListenerDumperInterface
-     */
     public function createEventListenerDumper(): EventListenerDumperInterface
     {
         return new EventListenerDumper($this->createSubscriberMerger(), $this->createEventCollection());
     }
 
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
-     */
     public function createEventCollection(): EventCollectionInterface
     {
         return new EventCollection();

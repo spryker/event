@@ -25,10 +25,6 @@ class EventLogger implements EventLoggerInterface
      */
     protected $eventConfig;
 
-    /**
-     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
-     * @param \Spryker\Zed\Event\EventConfig $eventConfig
-     */
     public function __construct(
         LoggerConfigInterface $loggerConfig,
         EventConfig $eventConfig

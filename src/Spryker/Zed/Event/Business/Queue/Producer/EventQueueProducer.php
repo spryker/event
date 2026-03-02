@@ -32,11 +32,6 @@ class EventQueueProducer implements EventQueueProducerInterface
      */
     protected $eventConfig;
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface $queueClient
-     * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Event\EventConfig $eventConfig
-     */
     public function __construct(
         EventToQueueInterface $queueClient,
         EventToUtilEncodingInterface $utilEncodingService,

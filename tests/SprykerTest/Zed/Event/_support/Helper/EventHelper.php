@@ -32,11 +32,6 @@ class EventHelper extends AbstractHelper
      */
     protected $eventSubscriber = [];
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $eventSubscriber
-     *
-     * @return void
-     */
     public function addEventSubscriber(EventSubscriberInterface $eventSubscriber): void
     {
         $this->eventSubscriber[get_class($eventSubscriber)] = $eventSubscriber;
@@ -50,11 +45,6 @@ class EventHelper extends AbstractHelper
         $this->getDependencyProviderHelper()->setDependency(EventDependencyProvider::EVENT_SUBSCRIBERS, $eventSubscriberCollection);
     }
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _before(TestInterface $test): void
     {
         $this->cleanupStaticCache(SubscriberMerger::class, 'eventCollectionBuffer', null);
@@ -62,11 +52,6 @@ class EventHelper extends AbstractHelper
         $this->addEventSubscriber(new PublisherSubscriber());
     }
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _after(TestInterface $test): void
     {
         $this->resetStaticCaches();

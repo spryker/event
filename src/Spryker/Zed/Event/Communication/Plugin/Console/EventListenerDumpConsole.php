@@ -19,9 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class EventListenerDumpConsole extends Console
 {
-    /**
-     * @return void
-     */
     protected function configure(): void
     {
         parent::configure();
