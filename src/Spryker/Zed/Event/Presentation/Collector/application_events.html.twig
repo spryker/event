@@ -1,0 +1,61 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span class="sf-toolbar-value">{{ collector.eventCount }}</span>
+    {% endset %}
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Application Events</b>
+            <span class="sf-toolbar-status">{{ collector.eventCount }}</span>
+        </div>
+    {% endset %}
+    {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        <strong>Application Events</strong>
+        <span class="count">
+            <span>{{ collector.eventCount }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Application Events</h2>
+
+    <div class="metrics">
+        <div class="metric">
+            <span class="value">{{ collector.eventCount }}</span>
+            <span class="label">Total</span>
+        </div>
+    </div>
+
+    {% if collector.events | length > 0 %}
+        <table style="table-layout: fixed; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 140px;">Time</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in collector.events %}
+                    <tr>
+                        <td style="white-space: nowrap;">{{ event.datetime }}</td>
+                        <td style="word-break: break-all; overflow-wrap: break-word;">{{ event.message }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty">
+            <p>No application events were dispatched during this request.</p>
+        </div>
+    {% endif %}
+{% endblock %}
