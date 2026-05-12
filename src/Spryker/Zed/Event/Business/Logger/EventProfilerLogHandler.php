@@ -44,9 +44,6 @@ class EventProfilerLogHandler extends AbstractProcessingHandler
         return $this->records;
     }
 
-    /**
-     * @return void
-     */
     public function reset(): void
     {
         parent::reset();

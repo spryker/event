@@ -206,9 +206,10 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
     protected function retryMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $retryMessage): void
     {
-        if ($queueMessageTransfer->getRoutingKey()) {
+        if ($queueMessageTransfer->getRoutingKey() && $queueMessageTransfer->getRoutingKey() !== 'retry') {
             return;
         }
+        $queueMessageTransfer->setRoutingKey(null);
 
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);

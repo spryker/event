@@ -23,17 +23,11 @@ class ApplicationEventsDataCollector extends DataCollector
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data[static::DATA_KEY_EVENTS] = $this->profilerHandler->getRecords();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;
@@ -47,17 +41,11 @@ class ApplicationEventsDataCollector extends DataCollector
         return $this->data[static::DATA_KEY_EVENTS] ?? [];
     }
 
-    /**
-     * @return int
-     */
     public function getEventCount(): int
     {
         return count($this->getEvents());
     }
 
-    /**
-     * @return void
-     */
     public function reset(): void
     {
         parent::reset();
