@@ -106,6 +106,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
 
                 $queueMessageTransfer->setAcknowledge(true);
+                $queueMessageTransfer->setRoutingKey(null);
             } catch (Throwable $exception) {
                 $errorMessage = $this->createErrorMessage(
                     $eventQueueSentMessageBodyTransfer->getEventName(),

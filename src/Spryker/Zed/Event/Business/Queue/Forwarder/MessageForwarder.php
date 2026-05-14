@@ -39,6 +39,7 @@ class MessageForwarder implements MessageForwarderInterface
 
         foreach ($queueMessageTransfers as $queueMessageTransfer) {
             $queueMessageTransfer->setAcknowledge(true);
+            $queueMessageTransfer->setRoutingKey(null);
             $this->sendMessage($queueMessageTransfer);
 
             $responses[] = $queueMessageTransfer;
