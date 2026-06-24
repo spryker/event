@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class EventConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var int
      */
     public const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 500;
@@ -26,11 +28,15 @@ class EventConfig extends AbstractBundleConfig
     protected const ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE = 500;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const DEFAULT_MAX_RETRY = 1;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const NO_RETRY = 0;
