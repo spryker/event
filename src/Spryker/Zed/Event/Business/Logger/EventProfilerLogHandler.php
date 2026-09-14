@@ -22,17 +22,23 @@ class EventProfilerLogHandler extends AbstractProcessingHandler
     protected array $records = [];
 
     /**
-     * @param array<string, mixed> $record
-     *
-     * @return void
+     * @param \Monolog\LogRecord|array $record
      */
-    protected function write(array $record): void
+    protected function write($record): void
     {
-        $datetime = $record[static::RECORD_KEY_DATETIME] ?? null;
+        if (is_array($record)) {
+            $datetime = $record[static::RECORD_KEY_DATETIME] ?? null;
+            $this->records[] = [
+                static::RECORD_KEY_DATETIME => $datetime instanceof DateTimeInterface ? $datetime->format('H:i:s.u') : (string)$datetime,
+                static::RECORD_KEY_MESSAGE => $record[static::RECORD_KEY_MESSAGE] ?? '',
+            ];
+
+            return;
+        }
 
         $this->records[] = [
-            static::RECORD_KEY_DATETIME => $datetime instanceof DateTimeInterface ? $datetime->format('H:i:s.u') : (string)$datetime,
-            static::RECORD_KEY_MESSAGE => $record[static::RECORD_KEY_MESSAGE] ?? '',
+            static::RECORD_KEY_DATETIME => $record->datetime->format('H:i:s.u'),
+            static::RECORD_KEY_MESSAGE => $record->message,
         ];
     }
 
