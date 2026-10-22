@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Event\Business\Logger;
 
+use Closure;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Event\EventConfig;
@@ -34,17 +35,17 @@ class EventLogger implements EventLoggerInterface
     }
 
     /**
-     * @param string $message
+     * @param \Closure(): string $messageProvider
      *
      * @return void
      */
-    public function log($message)
+    public function log(Closure $messageProvider): void
     {
         if (!$this->eventConfig->isLoggerActivated()) {
             return;
         }
 
         $this->getLogger($this->loggerConfig)
-            ->info($message);
+            ->info($messageProvider());
     }
 }

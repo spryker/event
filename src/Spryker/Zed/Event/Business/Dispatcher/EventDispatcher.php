@@ -309,15 +309,13 @@ class EventDispatcher implements EventDispatcherInterface
         TransferInterface $transfer,
         EventListenerContextInterface $eventListener
     ): void {
-        $this->eventLogger->log(
-            sprintf(
-                $this->createHandleMessage($eventListener),
-                $eventName,
-                $eventListener->getListenerName(),
-                get_class($transfer),
-                $this->utilEncodingService->encodeJson($transfer->toArray()),
-            ),
-        );
+        $this->eventLogger->log(fn () => sprintf(
+            $this->createHandleMessage($eventListener),
+            $eventName,
+            $eventListener->getListenerName(),
+            get_class($transfer),
+            $this->utilEncodingService->encodeJson($transfer->toArray()),
+        ));
     }
 
     protected function createHandleMessage(EventListenerContextInterface $eventListener): string

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
+use Closure;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Propel\Runtime\Propel;
@@ -97,13 +98,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $listener->handle($transfer, $eventQueueSentMessageBodyTransfer->getEventName());
                 }
 
-                $this->logConsumerAction(
-                    sprintf(
-                        '"%s" listener "%s" was successfully handled.',
-                        $eventQueueSentMessageBodyTransfer->getEventName(),
-                        $eventQueueSentMessageBodyTransfer->getListenerClassName(),
-                    ),
-                );
+                $this->logConsumerAction(fn () => sprintf(
+                    '"%s" listener "%s" was successfully handled.',
+                    $eventQueueSentMessageBodyTransfer->getEventName(),
+                    $eventQueueSentMessageBodyTransfer->getListenerClassName(),
+                ));
 
                 $queueMessageTransfer->setAcknowledge(true);
                 $queueMessageTransfer->setRoutingKey(null);
@@ -113,7 +112,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $eventQueueSentMessageBodyTransfer->getListenerClassName(),
                     $exception,
                 );
-                $this->logConsumerAction($errorMessage, $exception);
+                $this->logConsumerAction(fn () => $errorMessage, $exception);
                 $this->handleFailedMessage($queueMessageTransfer, $errorMessage);
             }
         }
@@ -176,7 +175,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     ): void {
         $errorMessage = $this->createErrorMessage($eventName, $listenerClassName, $throwable);
 
-        $this->logConsumerAction($errorMessage, $throwable);
+        $this->logConsumerAction(fn () => $errorMessage, $throwable);
         if (!$this->eventConfig->isLoggerActivated()) {
             $errorMessage = 'Please enable the event logger in the config_* files to see the error message: `$config[EventConstants::LOGGER_ACTIVE] = true;`';
         }
@@ -243,35 +242,31 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected function isMessageBodyValid(EventQueueSendMessageBodyTransfer $eventQueueSendMessageBodyTransfer)
     {
         if (!$eventQueueSendMessageBodyTransfer->getListenerClassName()) {
-            $this->logConsumerAction('Listener class name is not set.');
+            $this->logConsumerAction(fn () => 'Listener class name is not set.');
 
             return false;
         }
 
         if (!$eventQueueSendMessageBodyTransfer->getTransferClassName()) {
-            $this->logConsumerAction('Transfer class name is not set.');
+            $this->logConsumerAction(fn () => 'Transfer class name is not set.');
 
             return false;
         }
 
         if (!class_exists($eventQueueSendMessageBodyTransfer->getListenerClassName())) {
-            $this->logConsumerAction(
-                sprintf(
-                    'Listener class "%s" not found.',
-                    $eventQueueSendMessageBodyTransfer->getListenerClassName(),
-                ),
-            );
+            $this->logConsumerAction(fn () => sprintf(
+                'Listener class "%s" not found.',
+                $eventQueueSendMessageBodyTransfer->getListenerClassName(),
+            ));
 
             return false;
         }
 
         if (!class_exists($eventQueueSendMessageBodyTransfer->getTransferClassName())) {
-            $this->logConsumerAction(
-                sprintf(
-                    'Transfer class "%s" not found.',
-                    $eventQueueSendMessageBodyTransfer->getTransferClassName(),
-                ),
-            );
+            $this->logConsumerAction(fn () => sprintf(
+                'Transfer class "%s" not found.',
+                $eventQueueSendMessageBodyTransfer->getTransferClassName(),
+            ));
 
             return false;
         }
@@ -280,14 +275,14 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     }
 
     /**
-     * @param string $message
+     * @param \Closure(): string $messageProvider
      * @param \Throwable|null $throwable
      *
      * @return void
      */
-    protected function logConsumerAction($message, ?Throwable $throwable = null)
+    protected function logConsumerAction(Closure $messageProvider, ?Throwable $throwable = null): void
     {
-        $this->eventLogger->log('[async] ' . $message);
+        $this->eventLogger->log(fn () => '[async] ' . $messageProvider());
 
         if ($throwable !== null) {
             ErrorLogger::getInstance()->log($throwable);

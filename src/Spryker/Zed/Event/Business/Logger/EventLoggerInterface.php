@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Event\Business\Logger;
 
+use Closure;
+
 interface EventLoggerInterface
 {
     /**
-     * @param string $message
+     * @param \Closure(): string $messageProvider
      *
      * @return void
      */
-    public function log($message);
+    public function log(Closure $messageProvider): void;
 }

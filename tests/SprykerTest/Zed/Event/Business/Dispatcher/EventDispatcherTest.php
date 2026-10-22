@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace SprykerTest\Zed\Event\Business\Dispatcher;
 
+use Closure;
 use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\Dispatcher\EventDispatcher;
@@ -126,6 +127,37 @@ class EventDispatcherTest extends Unit
 
         $eventDispatcher = $this->createEventDispatcher($eventCollection, null, $eventLoggerMock);
 
+        $eventDispatcher->trigger(static::TEST_EVENT_NAME, $transferMock);
+    }
+
+    public function testTriggerPassesLazyMessageProviderSoDisabledLoggerNeverBuildsIt(): void
+    {
+        // Arrange
+        $eventCollection = $this->createEventCollection();
+        $transferMock = $this->createTransferMock();
+        $transferMock->expects($this->never())
+            ->method('toArray');
+
+        $eventLoggerMock = $this->createEventLoggerMock();
+        $eventLoggerMock->expects($this->once())
+            ->method('log')
+            ->with($this->isInstanceOf(Closure::class));
+
+        $eventListerMock = $this->createEventListenerMock();
+        $eventListerMock
+            ->expects($this->once())
+            ->method('handle')
+            ->with($transferMock);
+
+        $eventCollection->addListener(static::TEST_EVENT_NAME, $eventListerMock);
+
+        $utilEncodingMock = $this->createUtilEncodingMock();
+        $utilEncodingMock->expects($this->never())
+            ->method('encodeJson');
+
+        $eventDispatcher = new EventDispatcher($eventCollection, $this->createQueueProducerMock(), $eventLoggerMock, $utilEncodingMock);
+
+        // Act & Assert
         $eventDispatcher->trigger(static::TEST_EVENT_NAME, $transferMock);
     }
 
